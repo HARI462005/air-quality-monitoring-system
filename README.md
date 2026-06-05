@@ -47,25 +47,6 @@ This system continuously monitors industrial environmental conditions such as te
 
 ---
 
-## 🔌 Pin Configuration
-
-| Component | ESP32 Pin |
-|------------|------------|
-| DHT11 | GPIO 15 |
-| MQ135 | GPIO 34 |
-| MQ7 | GPIO 35 |
-| MQ5 | GPIO 32 |
-| OLED MOSI | GPIO 23 |
-| OLED CLK | GPIO 18 |
-| OLED DC | GPIO 2 |
-| OLED CS | GPIO 5 |
-| OLED RESET | GPIO 4 |
-| LED1 | GPIO 19 |
-| LED2 | GPIO 21 |
-| Buzzer | GPIO 22 |
-
----
-
 ## ⚙ Working Principle
 
 1. ESP32 collects data from DHT11 and MQ sensors.
