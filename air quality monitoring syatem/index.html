@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Air Quality Monitoring</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding-top: 30px;
+    }
+
+    .card {
+      background: #222;
+      width: 320px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px cyan;
+    }
+
+    h1 {
+      color: cyan;
+    }
+
+    .data {
+      font-size: 22px;
+      margin: 15px;
+    }
+
+    .status {
+      font-size: 30px;
+      font-weight: bold;
+      color: yellow;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>AIR QUALITY MONITORING</h1>
+
+  <div class="card">
+
+    <div class="data">
+      Temperature :
+      <span id="temp">0</span> °C
+    </div>
+
+    <div class="data">
+      Humidity :
+      <span id="humidity">0</span> %
+    </div>
+
+    <div class="data">
+      MQ135 :
+      <span id="mq135">0</span>
+    </div>
+
+    <div class="data">
+      MQ7 :
+      <span id="mq7">0</span>
+    </div>
+
+    <div class="data">
+      MQ5 :
+      <span id="mq5">0</span>
+    </div>
+
+    <div class="status" id="status">
+      SAFE
+    </div>
+
+  </div>
+
+  <!-- Firebase -->
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getDatabase,
+      ref,
+      onValue
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    // Firebase Config
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyClOp1PivNudD7aFK1ihk1LRWmXPTURZRU",
+      authDomain: "air-quality-monitoring-s-3fc81.firebaseapp.com",
+      databaseURL: "https://air-quality-monitoring-s-3fc81-default-rtdb.firebaseio.com",
+      projectId: "air-quality-monitoring-s-3fc81",
+      storageBucket: "air-quality-monitoring-s-3fc81.firebasestorage.app",
+      messagingSenderId: "570839948134",
+      appId: "1:570839948134:web:106fcb34adb760f1a686a7",
+      measurementId: "G-R7LDJZGESK"
+    };
+
+    // Initialize Firebase
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getDatabase(app);
+
+    // Database Reference
+
+    const dataRef = ref(db, "AirQuality");
+
+    // Read Live Data
+
+    onValue(dataRef, (snapshot) => {
+
+      const data = snapshot.val();
+
+      document.getElementById("temp").innerHTML = data.Temperature;
+
+      document.getElementById("humidity").innerHTML = data.Humidity;
+
+      document.getElementById("mq135").innerHTML = data.MQ135;
+
+      document.getElementById("mq7").innerHTML = data.MQ7;
+
+      document.getElementById("mq5").innerHTML = data.MQ5;
+
+      document.getElementById("status").innerHTML = data.Status;
+
+      // Status Color
+
+      if (data.Status == "SAFE") {
+        document.getElementById("status").style.color = "lime";
+      }
+
+      else if (data.Status == "WARNING") {
+        document.getElementById("status").style.color = "yellow";
+      }
+
+      else {
+        document.getElementById("status").style.color = "red";
+      }
+
+    });
+
+  </script>
+
+</body>
+
+</html>
